@@ -1,0 +1,44 @@
+package com.velocity;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+
+public class Sample {
+	public static void main(String[] args){
+		Connection connection=null;
+		PreparedStatement preparedStatement=null;
+		PreparedStatement preparedStatement2=null;
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			connection=DriverManager.getConnection("jdbc:mysql://localhost:3306/mydatabase1", "root", "Shaikh@199786");
+			preparedStatement=connection.prepareStatement("insert into users(firstname,lastname,address,city,salary)values(?,?,?,?,?)");
+			preparedStatement2=connection.prepareStatement("insert into users(firstname,lastname,address,city,salary)values(?,?,?,?,?)");
+
+			preparedStatement.setString(1, "Satiish");
+			preparedStatement.setString(2, "Khhade");
+			preparedStatement.setString(3, "dd");
+			preparedStatement.setString(4, "Mummbai");
+			preparedStatement.setInt(5, 88);
+			preparedStatement2.setString(1, "Satish");
+			preparedStatement2.setString(2, "Khade");
+			preparedStatement2.setString(3, "dddd");
+			preparedStatement2.setString(4, "Mumbai");
+			preparedStatement2.setInt(5, 88);
+			preparedStatement.executeUpdate();
+			preparedStatement2.executeUpdate();
+			System.out.println("Insertion with Prepared Statement done successfully...");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			connection.close();
+			preparedStatement.close();
+			preparedStatement2.close();
+		}
+
+
+	}
+}
